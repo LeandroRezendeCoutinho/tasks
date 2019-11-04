@@ -1,9 +1,13 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faCheckCircle, faTrashAlt} from '@fortawesome/free-solid-svg-icons'
 
-function App() {
-  return (
+library.add(faCheckCircle, faTrashAlt)
+
+class App extends Comment {
+  render()  {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
@@ -20,7 +24,7 @@ function App() {
         </a>
       </header>
     </div>
-  );
+  };
 }
 
 export default App;
