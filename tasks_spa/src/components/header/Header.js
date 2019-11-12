@@ -1,8 +1,8 @@
-import { Component } from "reatc";
+import React, { Component } from "reatc";
 import NavBar from "react-bootstrap/Navbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-class Header extends Comment {
+class Header extends Component {
   render(){
     return(
       <div>

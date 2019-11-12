@@ -140,3 +140,159 @@ Obs: Inclua os imports e o library.add ao arquivo sem alterar o resto dos códig
 Obs2: O arquivo App.js será a base do nosso projeto, ou seja, todos os outros components serão renderizados a partir dele.
 
 Explicação do código: O primeiro importe seleciona a biblioteca que vamos usar, o segundo importa os icones faCheckCircle (usado pra dizer que a tarefa está pronta) e faTrashAlt (usando pra excluir a tarefa) e o terceiro adiciona os ícones selecionados a library para termos acesso a eles em todos os components.
+
+## Gerando os components do Projeto
+Agora vamos gerar os components que serão a base do cliente react (header, tasks, list e create_tasks)
+
+1. Gere a pasta de components:
+mkdir src/components
+
+2. Gere os arquivos dos components:
+mkdir src/components/header
+mkdir src/components/tasks
+mkdir src/components/tasks/list
+mkdir src/components/tasks/create_tasks
+
+Criando o Header
+Vamos criar o component Header e depois um arquivo sass de estilo para o projeto.
+
+1. Crie o arquivo src/components/header/Header.js e coloque nele:
+```
+import React, { Component } from 'react';
+   import Navbar from 'react-bootstrap/Navbar';
+   import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+   class Header extends Component {
+     render() {
+       return (
+         <div>
+           <Navbar>
+             <Navbar.Brand>
+               <FontAwesomeIcon icon="check-circle" size="lg"/> Task Finisher
+             </Navbar.Brand>
+           </Navbar>
+         </div>
+       );
+     }
+   }
+
+export default Header;
+```
+
+Explicação do código: Neste component nós importamos as bibliotecas básicas do React (React e Component), o Navbar (do bootstrap) e o FontAwesome.
+Depois utilizando os components improtados, criamos a Navbar (), injetamos o icone (check-circle) e depois o nome do Projeto (Task Finisher).
+
+2. Renomeie seu arquivo src/App.css para src/App.scss
+
+3. Atualize a importação do src/App.scss no src/App.js
+```
+import React, { Component } from 'react';
+   import './App.scss';
+   import Header from './components/header/Header';
+
+   import { library } from '@fortawesome/fontawesome-svg-core'
+   import { faCheckCircle, faTrashAlt } from '@fortawesome/free-regular-svg-icons'
+
+   library.add(faCheckCircle, faTrashAlt)
+
+   class App extends Component {
+     render() {
+       return (
+         <div>
+           <Header/>
+         </div>
+       );
+     }
+   }
+
+export default App;
+```
+
+Explicação do código: Note que estamos importando o Header no começo do arquivo e depois adicionando ele ao Html do App (< Header />) para que ele seja renderizado corretamente.
+
+4. Substitua o conteúdo de src/App.scss:
+```
+ $yellow: #F5DD16;
+   $dark-grey: #7C7C7C;
+   $light-grey: #BEBEBE;
+   $red: #EE4525;
+
+   .navbar{
+     background-color: $dark-grey;
+     .navbar-brand{
+       color: $yellow !important;
+     }
+   }
+```
+
+Explicação do código: Aqui nós criamos as variáveis sass com as cores que usaremos no projeto e adicionamos alguns estilos básicos para deixar a nossa Navbar similar ao desenhado no mockup.
+
+Criando o component Principal das Tasks
+Aqui iremos criar a estrutura do component Tasks que servirá como um container para os outros components que irão listar, deletar, atualizar e criar tarefas.
+
+1. Crie um arquivo chamado Tasks.js em src/components/tasks e coloque nele:
+```
+import React, { Component } from 'react';
+   import Row from 'react-bootstrap/Row';
+   import Col from 'react-bootstrap/Col';
+
+   class Tasks extends Component {
+     render() {
+       return (
+         <Row>
+           <Col xs={{ span: 8, offset: 2 }} className="tasks_list">
+             <p className="title">To-do</p>
+             List...
+           </Col>
+           <Col xs={{ span: 8, offset: 2 }} className="tasks_list">
+             <p className="title">Done</p>
+             List...
+           </Col>
+         </Row>
+       );
+     }
+   }
+
+export default Tasks;
+```
+
+Explicação do código:
+1 – Primeiro importamos as bibliotecas básicas do react e do Bootstrap (Row e Col)
+
+2 – Criarmos uma Col (linha) com o título To-do para futuramente adicionar a lista de tarefas a fazer
+
+3 – Criarmos uma Col (linha) com o título Done para futuramente adicionar a lista de tarefas feitas
+
+2. Atualize o src/APP.js colocando:
+```
+ import React, { Component } from 'react';
+   import Container from 'react-bootstrap/Container'
+
+   import './App.scss';
+   import Tasks from './components/tasks/Tasks';
+   import Header from './components/header/Header';
+
+   import { library } from '@fortawesome/fontawesome-svg-core'
+   import { faCheckCircle, faTrashAlt } from '@fortawesome/free-regular-svg-icons'
+
+   library.add(faCheckCircle, faTrashAlt)
+
+   class App extends Component {
+     render() {
+       return (
+         <div>
+           <Header/>
+           <Container>
+             <Tasks/>
+           </Container>
+         </div>
+       );
+     }
+   }
+
+export default App;
+```
+
+Explicação do código:
+1 – Importamos o Component Tasks
+2 – Adicionamos ele o Tasks () dentro de um Container (elemento que centraliza os conteúdos) ao APP para que seja exibido na tela
